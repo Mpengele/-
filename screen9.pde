@@ -1,16 +1,34 @@
-void screen9() {
+void screen9(PGraphics pg) {
 
   //second screen for different settings
   //fill(171);
   stroke(screensLineStroke);
   strokeWeight(screensLineStrokeWeight);
   rect(26*width/35,0,(9*width)/35, height);
-  pg9.beginDraw();
-  pg9.translate( width/2, height/4, 0);
-  //pg9.background(realTimeData);
-  pg9.background(255,255,255);
   
   
+  rect(26*width/35,0,(9*width)/35, height/3);
+  rect(26*width/35,height/3,(9*width)/35,height/3);
+  rect(26*width/35,(2*height)/3,(9*width)/35,height/3);
+
+  
+  
+  pg.beginDraw();
+  pg.background(255,255,255);
+  
+  //pg.rect(mouseX,mouseY, width/15, height/17.65);
+  
+  
+  pg.translate(width/4.95,-height/5.06);
+  dataDisplacement(pg);
+  pg.translate(-width/4.95,height/5.06);
+   
+  
+   
+  /*
+    
+   pg.translate( width/2, height/4, 0);
+    
   //pg9.strokeWeight(strokeWeightsize);
   //pg9.strokeWeight(1);
   pg9.textFont(f3);
@@ -79,8 +97,8 @@ void screen9() {
   //rect(width/1.187,mouseY,width/8, height/17.65); // the place for the botton
   //println(mouseX,mouseY);
   
-  
+  */
 
-  pg9.endDraw();
-  image(pg9,26*width/35,0,(9*width)/35, height);
+  pg.endDraw();
+  image(pg,26*width/35,0,(9*width)/35, height);
 }

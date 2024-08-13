@@ -1,5 +1,7 @@
 
-// define a cylinder
+// *****************************  define a cylinder ***************************************
+//*****************************************************************************************
+
 void drawCylinder(PGraphics pg,PImage img,int sides, float r, float h)
     {
         float angle = 360 / sides;
@@ -46,7 +48,9 @@ void drawCylinder(PGraphics pg,PImage img,int sides, float r, float h)
     }
     
     
-    
+// ********************  Defining  Mean, Max and  Min func ********************************
+//*****************************************************************************************
+
     // min and Max functions
 float maxValue(float oldParameter, float value) {
   if (oldParameter<value) {
@@ -60,6 +64,45 @@ float minValue(float oldParameter, float value) {
   }
   return oldParameter;
 }
+
+float meanAngle(float[] array){
+  float mean = 0;
+  int len = array.length;
+  for (int i =0; i<len; i++){
+     mean+=abs(array[i]);
+  }
+  mean/=len;
+  return mean;
+}
+
+
+
+float[] dAngleArray(float[] array){
+ 
+  int len = array.length;
+  float[] dAngle = new float[len-1];
+  
+  for (int i =0; i<(len-1); i++){
+     
+    dAngle[i] = abs(array[i+1])-abs(array[i]);
+
+  }
+
+ return dAngle;
+}
+
+float dAngleArrayMean(float[] array){
+  float mean = 0;
+  int len = array.length;
+  for (int i =0; i<len; i++){
+     mean+=abs(array[i]);
+  }
+  mean/=len;
+  return mean;
+}
+
+// *****************************  Temperature fun *****************************************
+//*****************************************************************************************
 
 void tempIndicator(PGraphics pg, float temp){
 
@@ -99,10 +142,11 @@ void tempIndicator(PGraphics pg, float temp){
 }
 
 
+// **************************  Data treatment fun defining ********************************
+//*****************************************************************************************
 
 float[] treatData (byte[] dataSrc, byte[] dataDst){
 
-  
   // delete for scr array  8 bytes :: 4 bytes >> startBytes and  4 bytes >> stopBytes
   byte[] tempDa = new byte[dataDst.length];
   for(int i = 0; i < (dataSrc.length-8); i++){
@@ -223,11 +267,11 @@ void packArrayToVariables(float[] array ){
 }
 }
 
+// *******************  horizontal presentation of  Data **********************************
+//*****************************************************************************************
 
-//**************** horizontal presentation of  Data *************************************
 void printData(){
-
- 
+  
 println(id1);
 println(batLev1);
 println(temp1);
@@ -286,39 +330,43 @@ for(int i = 0; i<18; i++){
 
 */
 
-
-float meanAngle(float[] array){
-  float mean = 0;
-  int len = array.length;
-  for (int i =0; i<len; i++){
-     mean+=abs(array[i]);
-  }
-  mean/=len;
-  return mean;
-}
+// *******************  Defining Data Display funct ***************************************
+//*****************************************************************************************
 
 
-
-float[] dAngleArray(float[] array){
- 
-  int len = array.length;
-  float[] dAngle = new float[len-1];
+void dataDisplacement(PGraphics pg){
   
-  for (int i =0; i<(len-1); i++){
-     
-    dAngle[i] = abs(array[i+1])-abs(array[i]);
-
-  }
-
- return dAngle;
-}
-
-float dAngleArrayMean(float[] array){
-  float mean = 0;
-  int len = array.length;
-  for (int i =0; i<len; i++){
-     mean+=abs(array[i]);
-  }
-  mean/=len;
-  return mean;
+  
+  
+  //  //offset used for two wheels to adjuste position oif text on the screen 7
+  //dtWidth = width/16.66;
+  //dtheight = 0.85*height/15.45;
+  
+  ////Data zone diplay
+  ////offset used for left wheel to adjuste position oif text on the screen 7 
+  //widthWheelData = width/100;
+  //heightWheelData = height/9.5;
+  //widthPosX = width/100;
+  //heightPosY = height/30.9;
+  //dtWidth =  width/12;
+  //dtheight= height/11;
+  //widthItem =  width/13.33;
+  //heightItem = height/13.73;
+  
+  //int dt = 2;
+ 
+  
+  
+  
+  pg.fill(0);
+  pg.textFont(f2);
+  pg.textSize(30);
+  pg.text("Блок 1", -width/10.06, height/4.35);
+ 
+  pg.textSize(20);
+  pg.text("Левое Колесо",-width/12.19,height/4.03,width/15, height/17.65);
+  pg.text("Правое Колесо",-width/55.55,height/4.03,width/15, height/17.65);  
+  
+  
+  
 }

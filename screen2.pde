@@ -1,13 +1,13 @@
-void screen2() {
+void screen2(PGraphics pg) {
 
   //second screen for different settings
   //fill(0);
   stroke(screensLineStroke);
   strokeWeight(screensLineStrokeWeight);
   rect(width/7,0, (3*width)/5, height/7); 
-  pg2.beginDraw();
+  pg.beginDraw();
   //pg2.background(title);
-  pg2.background(255,255,255);
+  pg.background(255,255,255);
   
   //pg2.fill(textColor);
   //pg2.textFont(f3);
@@ -20,11 +20,13 @@ void screen2() {
 
   
   //logo
-   pg2.image(logo,width/5.71,width/500,width/2.85,width/10); //add image
-   //pg2.image(logo,width/5.71,width/500,width/2.85,width/10); //add image
+   //pg.image(logo,width/5.71,width/500,width/2.85,width/10); //add image
+   pg.image(logo,width/7.89,-height/103,width/2.85,width/10); //add image
+   println (mouseX,mouseY);
+ 
   
 
   
-  pg2.endDraw();
-  image(pg2, width/7,0, (3*width)/5, height/7);
+  pg.endDraw();
+  image(pg, width/7,0, (3*width)/5, height/7);
 }

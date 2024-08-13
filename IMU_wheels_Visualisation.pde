@@ -261,7 +261,8 @@ void setup() {
  
   //Screen Size settings
   //size(1000, 618, P3D);
-  size(1500, 927, P3D);
+   //size(1250, 772, P3D);
+   size(1500, 927, P3D);
   //size(1555, 961, P3D);
   //fullScreen(P2D, SPAN);
   
@@ -398,14 +399,14 @@ void draw() {
   //****************************************************
   
   screen1();
-  screen2();
+  screen2(pg2);
   screen3(pg3);
   screen4(pg4);
   screen5(pg5);
-  screen6();
+  screen6(pg6);
   screen7(pg7);
-  screen8();
-  screen9();
+  screen8(pg8);
+  screen9(pg9);
   
   
   
