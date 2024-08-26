@@ -25,78 +25,52 @@ boolean startRecordData, stopRecordData = false;
 byte startByte3,startByte2,startByte1,startByte0 = 0;
 byte stopByte3,stopByte2,stopByte1,stopByte0 = 0;
 byte recByte =0;
-byte[] tempData = new byte[240];      
+byte[] tempData = new byte[244];      
 byte[] data = new byte[tempData.length-8];
-float[] flaotData;
+
+float[] flaotData =  {0.0};
 
 
-//**************************** first wheel variables ***************************************
-//******************************************************************************************
-
-int id1               = 0; 
-float batLev1         = 0.0;
-float temp1           = 0.0;
-float freq1           = 0.0;
-float[] roll1         = new float[18];
-float[] pitch1        = new float[18]; 
-float[] yaw1          = new float[18];
-
-float[] droll1         = new float[17];
-float[] dpitch1        = new float[17]; 
-float[] dyaw1          = new float[17];
-
-float meanRoll1       =0.0;
-float meanPitch1      =0.0;
-float meanYaw1        =0.0;
-
-float dphi1           =0.0;
-float dtheta1         =0.0;
-float dpsi1           =0.0;
-
-float w1_old2         =0.0;
-float w1_old1         =0.0;
-float w1_old0         =0.0;
-Boolean turnStab1     =true;
-float w1              =0.0;
-
-
-float speed3DSim1     =0.0;
-int speedRate1        =0;
-Boolean Isrunning1     = true;
-
+WheelVar w1 = new WheelVar();
+WheelVar w2 = new WheelVar();
+WheelVar w3 = new WheelVar();
+WheelVar w4 = new WheelVar();
+WheelVar w5 = new WheelVar(); 
+WheelVar w6 = new WheelVar();
 
 //**************************** second wheel variables ***************************************
 //*******************************************************************************************
 
-int id2               = 0; 
-float batLev2         = 0.0;
-float temp2           = 0.0;
-float freq2           = 0.0;
-float[] roll2         = new float[18];
-float[] pitch2        = new float[18]; 
-float[] yaw2          = new float[18]; 
+//int id2               = 0; 
+//float batLev2         = 0.0;
+//float temp2           = 0.0;
+//float dOmega2         = 0.0;
+//float freq2           = 0.0;
+//float[] roll2         = new float[17];
+//float[] pitch2        = new float[17]; 
+//float[] yaw2          = new float[17]; 
 
-float[] droll2         = new float[17];
-float[] dpitch2        = new float[17]; 
-float[] dyaw2          = new float[17]; 
+//float[] droll2         = new float[16];
+//float[] dpitch2        = new float[16]; 
+//float[] dyaw2          = new float[16]; 
 
-float meanRoll2       =0.0;
-float meanPitch2      =0.0;
-float meanYaw2        =0.0;
+//float meanRoll2       =0.0;
+//float meanPitch2      =0.0;
+//float meanYaw2        =0.0;
 
-float dphi2           =0.0;
-float dtheta2         =0.0;
-float dpsi2           =0.0;
+//float dphi2           =0.0;
+//float dtheta2         =0.0;
+//float dpsi2           =0.0;
 
-float w2_old2         =0.0;
-float w2_old1         =0.0;
-float w2_old0         =0.0;
-Boolean turnStab2     =true;
-float w2              =0.0;
+//float w2_old2         =0.0;
+//float w2_old1         =0.0;
+//float w2_old0         =0.0;
+//Boolean turnStab2     =true;
+//float w2_2              =0.0;
 
-float speed3DSim2     =0.0;
-int speedRate2        =0;
-Boolean Isrunning2     = true;
+//float speed3DSim2     =0.0;
+//int speedRate2        =0;
+//Boolean Isrunning2     = true;
 
 //**************************** Data global variables ****************************************
 //*******************************************************************************************
@@ -294,7 +268,7 @@ void setup() {
   
   // List all the available serial ports
   printArray(Serial.list());
-  portName = Serial.list()[0];
+  portName = Serial.list()[4];
   // Open the port you are using at the rate you want:
   myPort = new Serial(this, portName, baudRate);
   
@@ -394,18 +368,20 @@ void draw() {
   
   background(51);
 
-
+   angleRotSim++;
+   if(angleRotSim >= 360){angleRotSim =0;}
+   
   //********** Defining differents screens *************
   //****************************************************
   
   screen1();
   screen2(pg2);
   screen3(pg3);
-  screen4(pg4);
-  screen5(pg5);
-  screen6(pg6);
-  screen7(pg7);
-  screen8(pg8);
+  //screen4(pg4);
+  //screen5(pg5);
+  //screen6(pg6);
+  //screen7(pg7);
+  //screen8(pg8);
   screen9(pg9);
   
   
@@ -415,35 +391,42 @@ void draw() {
 //******************************************************************************************
 
   flaotData = treatData(tempData,data);
-  packArrayToVariables(flaotData);
+  
+  if ((flaotData[0] == 1) && (flaotData[0] == 1)){w1.packData(flaotData);}
+  else if ((flaotData[0] == 1) && (flaotData[0] == 2)){w2.packData(flaotData);}
+  else if ((flaotData[0] == 2) && (flaotData[0] == 1)){w3.packData(flaotData);}
+  else if ((flaotData[0] == 2) && (flaotData[0] == 2)){w4.packData(flaotData);}
+  else if ((flaotData[0] == 3) && (flaotData[0] == 1)){w5.packData(flaotData);}
+  else if ((flaotData[0] == 3) && (flaotData[0] == 2)){w5.packData(flaotData);}
+ 
   //printData();
   
   
-// *************** Value  calca *************************** 
-meanRoll1   = meanAngle(roll1);
-meanPitch1  = meanAngle(pitch1);
-meanYaw1    = meanAngle(yaw1);
+//// *************** Value  calca *************************** 
+//meanRoll1   = meanAngle(roll1);
+//meanPitch1  = meanAngle(pitch1);
+//meanYaw1    = meanAngle(yaw1);
 
-droll1         = dAngleArray(roll1);
-dpitch1        = dAngleArray(pitch1); 
-dyaw1          = dAngleArray(yaw1);
+//droll1         = dAngleArray(roll1);
+//dpitch1        = dAngleArray(pitch1); 
+//dyaw1          = dAngleArray(yaw1);
 
-dphi1           =  dAngleArrayMean(droll1);
-dtheta1         =  dAngleArrayMean(dpitch1);
-dpsi1           =  dAngleArrayMean(dyaw1)-0.013882357;
+//dphi1           =  dAngleArrayMean(droll1);
+//dtheta1         =  dAngleArrayMean(dpitch1);
+//dpsi1           =  dAngleArrayMean(dyaw1)-0.013882357;
 
-meanRoll2   = meanAngle(roll2);
-meanPitch2  = meanAngle(pitch2);
-meanYaw2    = meanAngle(yaw2);
+//meanRoll2   = meanAngle(roll2);
+//meanPitch2  = meanAngle(pitch2);
+//meanYaw2    = meanAngle(yaw2);
 
 
-droll2         = dAngleArray(roll2);
-dpitch2        = dAngleArray(pitch2); 
-dyaw2          = dAngleArray(yaw2);
+//droll2         = dAngleArray(roll2);
+//dpitch2        = dAngleArray(pitch2); 
+//dyaw2          = dAngleArray(yaw2);
 
-dphi2           =  dAngleArrayMean(roll2 );
-dtheta2         =  dAngleArrayMean(dpitch2);
-dpsi2           =  dAngleArrayMean(dyaw2)-0.013176469;
+//dphi2           =  dAngleArrayMean(roll2 );
+//dtheta2         =  dAngleArrayMean(dpitch2);
+//dpsi2           =  dAngleArrayMean(dyaw2)-0.013176469;
 
 
 //meanW2
@@ -454,58 +437,57 @@ dpsi2           =  dAngleArrayMean(dyaw2)-0.013176469;
 //************************ 3D Rotation Simulation decision *********************************
 //******************************************************************************************  
   
- angleRotSim++;
-if(angleRotSim >= 360){angleRotSim =0;}
 
 
 
-w1_old2  = w1_old1  ;
-w1_old1  = w1_old0;
-w1_old0  =  w1 ;
-if( (w1_old2 != 0) && (w1_old1 != 0) && (w1_old0!= 0) ){ turnStab1 = true;} else{turnStab1 = false;}
 
-w2_old2  =  w2_old1;  
-w2_old1  =  w2_old0;
-w2_old0  =  w2;
-if( (w2_old2 != 0) && (w2_old1 != 0) && (w2_old0!= 0) ){ turnStab2 = true;} else{turnStab2 = false;}
+//w1_old2  = w1_old1  ;
+//w1_old1  = w1_old0;
+//w1_old0  =  w1 ;
+//if( (w1_old2 != 0) && (w1_old1 != 0) && (w1_old0!= 0) ){ turnStab1 = true;} else{turnStab1 = false;}
+
+//w2_old2  =  w2_old1;  
+//w2_old1  =  w2_old0;
+//w2_old0  =  w2;
+//if( (w2_old2 != 0) && (w2_old1 != 0) && (w2_old0!= 0) ){ turnStab2 = true;} else{turnStab2 = false;}
 
 
-if (abs(dpsi1*freq1)<5){
-    w1  = 0.0;
-    speed3DSim1  =stepSpeedvalue[0]; 
-    Isrunning1 = false;
-  }
-  else{
-    w1  = dpsi1*freq1;        // value  to print on the  screen for  the  angular  rate
-    speed3DSim1 = angleRotSim;
-    Isrunning1 = true;
-  }
+//if (abs(dpsi1*freq1)<5){
+//    w1  = 0.0;
+//    speed3DSim1  =stepSpeedvalue[0]; 
+//    Isrunning1 = false;
+//  }
+//  else{
+//    w1  = dpsi1*freq1;        // value  to print on the  screen for  the  angular  rate
+//    speed3DSim1 = angleRotSim;
+//    Isrunning1 = true;
+//  }
     
-if (abs(dpsi2*freq2)<5){
-    w2  = 0.0; 
-    speed3DSim2  =stepSpeedvalue[0];
-    Isrunning2 = false;
-  }
-else{
-    w2  = dpsi2*freq2;
-    speed3DSim2 = angleRotSim;
-    Isrunning2 = true;
-  }
+//if (abs(dpsi2*freq2)<5){
+//    w2  = 0.0; 
+//    speed3DSim2  =stepSpeedvalue[0];
+//    Isrunning2 = false;
+//  }
+//else{
+//    w2  = dpsi2*freq2;
+//    speed3DSim2 = angleRotSim;
+//    Isrunning2 = true;
+//  }
 
-// rotation rate  adjustment
+//// rotation rate  adjustment
 
-if (w1 <5 ){ speedRate1 = stepSpeedvalue[0];}
-else if((w1 >=5) && (w1 < 10)){speedRate1 = stepSpeedvalue[1];} 
-else if((w1 >= 10) && (w1 < 180)){speedRate1 = stepSpeedvalue[2];} 
-else if((w1 >= 180) && (w1 <360)){speedRate1 = stepSpeedvalue[3];} 
-else {speedRate1 = stepSpeedvalue[4];}
+//if (w1 <5 ){ speedRate1 = stepSpeedvalue[0];}
+//else if((w1 >=5) && (w1 < 10)){speedRate1 = stepSpeedvalue[1];} 
+//else if((w1 >= 10) && (w1 < 180)){speedRate1 = stepSpeedvalue[2];} 
+//else if((w1 >= 180) && (w1 <360)){speedRate1 = stepSpeedvalue[3];} 
+//else {speedRate1 = stepSpeedvalue[4];}
 
 
-if (w2 <5 ){ speedRate2 = stepSpeedvalue[0];}
-else if((w2 >=5) && (w2 < 10)){speedRate2 = stepSpeedvalue[1];} 
-else if((w2 >= 10) && (w2 < 180)){speedRate2 = stepSpeedvalue[2];} 
-else if((w2 >= 180)&& (w2 <360)){speedRate2 = stepSpeedvalue[3];} 
-else {speedRate2 = stepSpeedvalue[4];}
+//if (w2 <5 ){ speedRate2 = stepSpeedvalue[0];}
+//else if((w2 >=5) && (w2 < 10)){speedRate2 = stepSpeedvalue[1];} 
+//else if((w2 >= 10) && (w2 < 180)){speedRate2 = stepSpeedvalue[2];} 
+//else if((w2 >= 180)&& (w2 <360)){speedRate2 = stepSpeedvalue[3];} 
+//else {speedRate2 = stepSpeedvalue[4];}
 
 
 
@@ -570,7 +552,138 @@ void serialEvent (Serial myPort) {
      startRecordData = false;
      stopRecordData = true;
   }
-    
-
   
+}
+
+
+
+
+//************************************* wheels class ***************************************
+//******************************************************************************************
+class WheelVar{
+  
+  float block;
+  float espID;
+  float bat;
+  float temp;
+  float pression;  // in bars /1000
+  float x;
+  float w              =1.0;
+  float freq;
+  float[] roll         = new float[17];
+  float[] pitch        = new float[17]; 
+  float[] yaw          = new float[17];
+  
+ 
+  float speed3DSim     =0.0;
+  int speedRate        =0;
+  Boolean Isrunning     = true;
+  Boolean turnStab      =true;
+  
+ void packData( float[] array ){
+    
+  block                 = int(array[0]*1000);
+  espID                 = int(array[1]*1000);
+  bat                   = array[3];
+  temp                  = array[4];
+  pression              = array[5];
+  x                     = array[6];
+  w                     = array[7];
+  freq                  = array[8];  
+
+  int wordStartcout   = 9;
+  
+  for(int i = 0; i<16; i++){
+  
+     roll[i]         =  array[wordStartcout];
+     pitch[i]        =  array[wordStartcout+1];
+     yaw[i]          =  array[wordStartcout+2];
+  
+    wordStartcout+=3;
+    } 
+     speed3DSim     =0.0;
+     speedRate        =0;
+     Isrunning     = true;
+     turnStab      =true;
+  }
+
+void printData(){
+  
+  if (espID ==1){
+    println(block);
+    println(espID);
+    println(bat);
+    println(temp);
+    println(pression);
+    println(x);
+    println(w);
+    println(freq);
+    for(int i = 0; i<18; i++){ print(roll[i] + "  ");}
+    println();
+    for(int i = 0; i<18; i++){ print(pitch[i]+ "  ");}
+    println();
+    for(int i = 0; i<18; i++){ print(yaw[i] + "  ");}
+    println();
+    println();
+  
+  }else if (espID ==1){
+  
+    print("                                        "); println(block);
+    print("                                        "); println(espID);
+    print("                                        "); println(bat);
+    print("                                        "); println(temp);
+    print("                                        "); println(pression);
+    print("                                        "); println(x);
+    print("                                        "); println(w);
+    print("                                        "); println(freq);
+    print("                                        ");
+    for(int i = 0; i<18; i++){ print(roll[i] + "  ");}
+    println();
+    print("                                        ");
+    for(int i = 0; i<18; i++){ print(pitch[i]+ "  ");}
+    println();
+    print("                                        ");
+    for(int i = 0; i<18; i++){ print(yaw[i] + "  ");}
+    println();
+  
+      }
+
+    }
+    
+  void tempInd(PGraphics pg){
+  
+     pg.stroke (buttonColor);
+     pg.strokeWeight(width/500);
+    
+     pg.fill (buttonColor);
+      //pg.fill (227,227,227);
+     pg.smooth();
+    
+     //build thermostat
+     pg.rectMode(CORNER);
+     
+     pg.rect (width/19.23, width/3.58, width/66.66, -width/8.06,width/50);
+     pg.ellipse (width/16.66, width/3.7, width/40, width/50);
+    
+     //build quicksilver reservoir
+      if (temp <= 30){ 
+        pg.stroke (100,200,0);
+        pg.fill(100, 200,0);
+      } else if (temp <=60){
+        pg.stroke (0,255,0);
+        pg.fill(0, 255,0);
+      } else
+      {
+          pg.stroke (255,0,0);
+          pg.fill(255, 0, 0);
+      }
+     pg.ellipse (width/16.66, width/3.7, width/100, width/100);
+    
+     //quicksilver
+     if (temp <=  0){
+           pg.rect(width/16.94, width/3.73, width/500, 0,width/50);
+     }else {
+            pg.rect(width/16.94, width/3.73, width/500, -temp,width/50);
+     }
+  }
 }
