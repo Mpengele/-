@@ -65,7 +65,7 @@ float minValue(float oldParameter, float value) {
   return oldParameter;
 }
 
-float meanAngle(float[] array){
+float meanArray(float[] array){
   float mean = 0;
   int len = array.length;
   for (int i =0; i<len; i++){
@@ -74,8 +74,6 @@ float meanAngle(float[] array){
   mean/=len;
   return mean;
 }
-
-
 
 float[] dAngleArray(float[] array){
  
@@ -201,9 +199,8 @@ float[] treatData (byte[] dataSrc, byte[] dataDst){
    */
    
    
-   /*
- 
    
+   /*
    
   // diaplay data in hex
   //int space = 0;
@@ -220,87 +217,87 @@ float[] treatData (byte[] dataSrc, byte[] dataDst){
   return floatData;
 }
 
-void packArrayToVariables(float[] array ){
+//void packData(float[] array ){
   
-  if(array[0] ==0.001){
+//  if(array[0] ==0.001){
     
-  id1                 = int(array[0]*1000); 
-  batLev1             = array[1];
-  temp1               = array[2];
-  freq1               = array[3];
+//  id1                 = int(array[0]*1000); 
+//  batLev1             = array[1];
+//  temp1               = array[2];
+//  freq1               = array[3];
   
   
-  int wordStartcout   = 4;
+//  int wordStartcout   = 4;
   
-  for(int i = 0; i<18; i++){
+//  for(int i = 0; i<17; i++){
   
-     roll1[i]         =  array[wordStartcout];
-     pitch1[i]        =  array[wordStartcout+1];
-     yaw1[i]          =  array[wordStartcout+2];
+//     roll1[i]         =  array[wordStartcout];
+//     pitch1[i]        =  array[wordStartcout+1];
+//     yaw1[i]          =  array[wordStartcout+2];
    
     
-    wordStartcout+=3;
-  } 
+//    wordStartcout+=3;
+//  } 
   
   
-  }
-  else if(array[0] ==0.002){
+//  }
+//  else if(array[0] ==0.002){
   
-    id2                 = int(array[0]*1000); 
-    batLev2             = array[1];
-    temp2               = array[2];
-    freq2               = array[3];
+//    id2                 = int(array[0]*1000); 
+//    batLev2             = array[1];
+//    temp2               = array[2];
+//    freq2               = array[3];
     
     
-    int wordStartcout   = 4;
+//    int wordStartcout   = 4;
     
-    for(int i = 0; i<18; i++){
+//    for(int i = 0; i<17; i++){
       
-       roll2[i]         =  array[wordStartcout];
-       pitch2[i]        =  array[wordStartcout+1];
-       yaw2[i]          =  array[wordStartcout+2];
+//       roll2[i]         =  array[wordStartcout];
+//       pitch2[i]        =  array[wordStartcout+1];
+//       yaw2[i]          =  array[wordStartcout+2];
      
-      wordStartcout+=3;
+//      wordStartcout+=3;
      
 
-  }
-}
-}
+//    }
+//  }
+//}
 
 // *******************  horizontal presentation of  Data **********************************
 //*****************************************************************************************
 
-void printData(){
+//void printData(){
   
-println(id1);
-println(batLev1);
-println(temp1);
-println(freq1);
-for(int i = 0; i<18; i++){ print(roll1[i] + "  ");}
-println();
-for(int i = 0; i<18; i++){ print(pitch1[i]+ "  ");}
-println();
-for(int i = 0; i<18; i++){ print(yaw1[i] + "  ");}
-println();
-println();
+//println(id1);
+//println(batLev1);
+//println(temp1);
+//println(freq1);
+//for(int i = 0; i<18; i++){ print(roll1[i] + "  ");}
+//println();
+//for(int i = 0; i<18; i++){ print(pitch1[i]+ "  ");}
+//println();
+//for(int i = 0; i<18; i++){ print(yaw1[i] + "  ");}
+//println();
+//println();
 
 
 
-print("                                        "); println(id2);
-print("                                        "); println(batLev2);
-print("                                        "); println(temp2);
-print("                                        "); println(freq2);
-print("                                        ");
-for(int i = 0; i<18; i++){ print(roll2[i] + "  ");}
-println();
-print("                                        ");
-for(int i = 0; i<18; i++){ print(pitch2[i]+ "  ");}
-println();
-print("                                        ");
-for(int i = 0; i<18; i++){ print(yaw2[i] + "  ");}
-println();
+//print("                                        "); println(id2);
+//print("                                        "); println(batLev2);
+//print("                                        "); println(temp2);
+//print("                                        "); println(freq2);
+//print("                                        ");
+//for(int i = 0; i<18; i++){ print(roll2[i] + "  ");}
+//println();
+//print("                                        ");
+//for(int i = 0; i<18; i++){ print(pitch2[i]+ "  ");}
+//println();
+//print("                                        ");
+//for(int i = 0; i<18; i++){ print(yaw2[i] + "  ");}
+//println();
 
-}
+//}
 
 
 /*
@@ -334,39 +331,42 @@ for(int i = 0; i<18; i++){
 //*****************************************************************************************
 
 
-void dataDisplacement(PGraphics pg){
+void dataDisplacement(PGraphics pg, String Bloc_text, float[] array1, float[] array2){
   
-  
-  
-  //  //offset used for two wheels to adjuste position oif text on the screen 7
-  //dtWidth = width/16.66;
-  //dtheight = 0.85*height/15.45;
-  
-  ////Data zone diplay
-  ////offset used for left wheel to adjuste position oif text on the screen 7 
-  //widthWheelData = width/100;
-  //heightWheelData = height/9.5;
-  //widthPosX = width/100;
-  //heightPosY = height/30.9;
-  //dtWidth =  width/12;
-  //dtheight= height/11;
-  //widthItem =  width/13.33;
-  //heightItem = height/13.73;
-  
-  //int dt = 2;
- 
-  
+  float hBloc = height/3.28;
+  float hBloc1 = height/3.09;
+  float dhBloc = height/17.16;
+  float wBloc = -width/5.12;
+  //float dwBloc= -width/13.88;
   
   
   pg.fill(0);
   pg.textFont(f2);
   pg.textSize(30);
-  pg.text("Блок 1", -width/10.06, height/4.35);
+  pg.text(Bloc_text, -width/10.06, height/4.35);
  
   pg.textSize(20);
   pg.text("Левое Колесо",-width/12.19,height/4.03,width/15, height/17.65);
   pg.text("Правое Колесо",-width/55.55,height/4.03,width/15, height/17.65);  
+   
+  pg.text("Напр батер [в]", wBloc,hBloc, width/10, height/19);
+  pg.text("скор вращ [°/с]",wBloc,hBloc+dhBloc, width/10, height/19);
+  pg.text("Темп подш [°C]", wBloc,hBloc+(2*dhBloc), width/10, height/19);
+  pg.text("давл кол [бар]", wBloc,hBloc+(3*dhBloc), width/10, height/19);
   
+  float wh1 = -width/12.19;
+  float wh2 = -width/55.55;
+
+  pg.text(array1[0],wh1,hBloc1);             pg.text(array2[0],wh2,hBloc1);
+  pg.text(array1[1],wh1,hBloc1+dhBloc);      pg.text(array2[1],wh2,hBloc1+dhBloc);
+  pg.text(array1[2],wh1,hBloc1+(2*dhBloc));  pg.text(array2[2],wh2,hBloc1+(2*dhBloc));
+  pg.text(array1[3],wh1,hBloc1+(3*dhBloc));  pg.text(array2[3],wh2,hBloc1+(3*dhBloc));
+  
+  
+  //pg.rect(wBloc,hBloc, width/10, height/19);
+  //pg.rect(wBloc,hBloc+dhBloc, width/10, height/19);
+  //pg.rect(wBloc,hBloc+(2*dhBloc), width/10, height/19);
+  //pg.rect(wBloc,hBloc+(3*dhBloc), width/10, height/19);
   
   
 }

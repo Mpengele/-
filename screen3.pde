@@ -14,7 +14,7 @@ void screen3(PGraphics pg) {
   //*************************************************************************************
  pg.translate(width/4.33, height/6.96);    
  
- if (Isrunning1 && turnStab1){
+ if ( (w1.Isrunning) && (w1.turnStab)){
     pg.noStroke();
     pg.fill(0,255,0);
     pg.sphere(15);
@@ -29,7 +29,7 @@ void screen3(PGraphics pg) {
   pg.translate( -width/4.33,-height/6.96);
    
   pg.translate(width/500,-height/4.68);
-  tempIndicator(pg,temp1);
+  tempIndicator(pg,w1.temp);
   pg.translate(-width/500,height/4.68);
  
     
@@ -51,10 +51,12 @@ void screen3(PGraphics pg) {
   
   pg.rotateX(radians(180)); //This is the physical axis x
   pg.rotateY(radians(90)); //This is the physical axis y
-  if(turnStab1){
-  pg.rotateZ(radians(speedRate1*speed3DSim1)); // this the phisical axis z
+  if(w1.turnStab){
+  pg.rotateZ(radians(w1.w*angleRotSim)); // this the phisical axis z
   }
-
+  //pg.rotateZ(radians(angleRotSim)); // this the phisical axis z
+  
+  
   pg.fill(shape3D);
   //pg3.box(width/5, height/15.45, width/5);
   drawCylinder(pg,fillBW,36,height/6.18,width/21.42);

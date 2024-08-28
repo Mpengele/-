@@ -11,8 +11,6 @@ void screen1() {
 
 
 
-
-  
  
   pg1.endDraw();
   image(pg1, 0,0,width/7, height);
@@ -57,7 +55,7 @@ void drawWidgets() {
     .setColorBackground( buttonColor ) //default color
     .setColorForeground( buttonMouseOverColor ) // mouse-over
     .setColorActive(buttonClickedColor ); //button pressed
-  println(mouseY);
+  
 
 
   //resetButton =cp5.addButton("RESET1")

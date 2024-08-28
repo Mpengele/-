@@ -7,7 +7,7 @@ import java.io.IOException;
 //*****************************************************************************************
 
 // button library
-import controlP5.*; 
+import controlP5.*;
 ControlP5 cp5;
 
 // ************************* defining COM PORT AND BUTTONS ********************************
@@ -22,10 +22,10 @@ char lineEnding = '\n';
 //*****************************************************************************************
 int startByteCount, stopByteCount = 0;
 boolean startRecordData, stopRecordData = false;
-byte startByte3,startByte2,startByte1,startByte0 = 0;
-byte stopByte3,stopByte2,stopByte1,stopByte0 = 0;
+byte startByte3, startByte2, startByte1, startByte0 = 0;
+byte stopByte3, stopByte2, stopByte1, stopByte0 = 0;
 byte recByte =0;
-byte[] tempData = new byte[244];      
+byte[] tempData = new byte[244];
 byte[] data = new byte[tempData.length-8];
 
 float[] flaotData =  {0.0};
@@ -35,24 +35,24 @@ WheelVar w1 = new WheelVar();
 WheelVar w2 = new WheelVar();
 WheelVar w3 = new WheelVar();
 WheelVar w4 = new WheelVar();
-WheelVar w5 = new WheelVar(); 
+WheelVar w5 = new WheelVar();
 WheelVar w6 = new WheelVar();
 
 //**************************** second wheel variables ***************************************
 //*******************************************************************************************
 
-//int id2               = 0; 
+//int id2               = 0;
 //float batLev2         = 0.0;
 //float temp2           = 0.0;
 //float dOmega2         = 0.0;
 //float freq2           = 0.0;
 //float[] roll2         = new float[17];
-//float[] pitch2        = new float[17]; 
-//float[] yaw2          = new float[17]; 
+//float[] pitch2        = new float[17];
+//float[] yaw2          = new float[17];
 
 //float[] droll2         = new float[16];
-//float[] dpitch2        = new float[16]; 
-//float[] dyaw2          = new float[16]; 
+//float[] dpitch2        = new float[16];
+//float[] dyaw2          = new float[16];
 
 //float meanRoll2       =0.0;
 //float meanPitch2      =0.0;
@@ -76,7 +76,7 @@ WheelVar w6 = new WheelVar();
 //*******************************************************************************************
 
 float angleRotSim =0.0;
-int[] stepSpeedvalue  = {0,1,2,3,4,5};
+int[] stepSpeedvalue  = {0, 1, 2, 3, 4, 5};
 
 
 
@@ -106,7 +106,7 @@ PGraphics pg4; // screen 4   ->  right wheel block1
 PGraphics pg5; // screen 5   ->  left wheel block2
 PGraphics pg6; // screen 6   ->  right wheel block2
 PGraphics pg7; // screen 7   ->  left wheel block3
-PGraphics pg8; // screen 8   ->  right wheel block4 
+PGraphics pg8; // screen 8   ->  right wheel block4
 PGraphics pg9; // screen 9   ->  real data for sensors
 
 // ******************************* set weight  and color variables *************************
@@ -182,7 +182,7 @@ color shape3D = color(50, 55, 100, 250);
 color ac_red = color(100, 0, 0, colorRange);
 color screensLineStroke = color (0);
 color orangeColor = color(204, 102, 0);
-color greenColor = color(152,190,100);
+color greenColor = color(152, 190, 100);
 
 // ******************************* set screen imagimes  *************************************
 //******************************************************************************************
@@ -228,51 +228,50 @@ String subFolfder = "bg8";
 //******************************************************************************************
 
 
-PFont f1, f2, f3, f1t,f2t,f3t, f1a,f2a,f1g,f2g;
+PFont f1, f2, f3, f1t, f2t, f3t, f1a, f2a, f1g, f2g;
 
 
 void setup() {
- 
+
   //Screen Size settings
   //size(1000, 618, P3D);
-   //size(1250, 772, P3D);
-   size(1500, 927, P3D);
+  //size(1250, 772, P3D);
+  size(1500, 927, P3D);
   //size(1555, 961, P3D);
   //fullScreen(P2D, SPAN);
-  
+
   surface.setTitle("Real_time WHEELS ORIENTATION"); // set window title
-  
+
   //***********variables on positionning ********************
   //*********************************************************
-  
+
   //buttonInterline = height/9.8;
   buttonInterline = height/11;
-  
+
   // declaring a button objet
   cp5 = new ControlP5(this);
-  
+
   //smooth (4);
-  if(subFolfder == "bg5" || subFolfder == "bg6" ){
+  if (subFolfder == "bg5" || subFolfder == "bg6" ) {
     screensLineStroke = color(255);
-  } else if (subFolfder == "bg7"){
+  } else if (subFolfder == "bg7") {
     screensLineStrokeWeight = 1;
- 
-  }else if(subFolfder == "bg8"){
+  } else if (subFolfder == "bg8") {
     screensLineStrokeWeight = 1.2;
   }
-  
-  
-  
+
+
+
   // *************************  set the COM PORT **************************************
   //***********************************************************************************
-  
+
   // List all the available serial ports
   printArray(Serial.list());
-  portName = Serial.list()[4];
+  portName = Serial.list()[0];
   // Open the port you are using at the rate you want:
   myPort = new Serial(this, portName, baudRate);
-  
-  
+
+
   //  //defining different screens with rect()
   //rect(0,0,width/7, height);                                              // screen 1   ->  buttons
   //rect(width/7,0, (3*width)/5, height/7);                                 // screen 2   ->  title
@@ -283,75 +282,75 @@ void setup() {
   //rect(width/7, (5*height)/7,(3*width)/10,(2*height)/7);                  // screen 7   ->  left block3
   //rect((31*width)/70,(5*height)/7,(3*width)/10,(2*height)/7);             // screen 8   ->  right block3
   //rect(26*width/35,0,(9*width)/35, height);                               // screen 9   ->  real data for sensors
- 
 
-//defining different screens
+
+  //defining different screens
   pg1 = createGraphics(width/7, height);                 // screen 1   ->  buttons
   pg2 = createGraphics((3*width)/5, height/7);           // screen 2   ->  title
-  pg3 = createGraphics((3*width)/10,(2*height)/7,P3D);   // screen 3   ->  left block1
-  pg4 = createGraphics((3*width)/10,(2*height)/7,P3D);   // screen 4   ->  right block1
-  pg5 = createGraphics((3*width)/10,(2*height)/7,P3D);   // screen 5   ->  left block2
-  pg6 = createGraphics((3*width)/10,(2*height)/7,P3D);   // screen 6   ->  right block2
-  pg7 = createGraphics((3*width)/10,(2*height)/7,P3D);   // screen 7   ->  left block3
-  pg8 = createGraphics((3*width)/10,(2*height)/7,P3D);   // screen 8   ->  right block3
+  pg3 = createGraphics((3*width)/10, (2*height)/7, P3D);   // screen 3   ->  left block1
+  pg4 = createGraphics((3*width)/10, (2*height)/7, P3D);   // screen 4   ->  right block1
+  pg5 = createGraphics((3*width)/10, (2*height)/7, P3D);   // screen 5   ->  left block2
+  pg6 = createGraphics((3*width)/10, (2*height)/7, P3D);   // screen 6   ->  right block2
+  pg7 = createGraphics((3*width)/10, (2*height)/7, P3D);   // screen 7   ->  left block3
+  pg8 = createGraphics((3*width)/10, (2*height)/7, P3D);   // screen 8   ->  right block3
   pg9 = createGraphics(9*width/35, height);              // screen 9   ->  real data for sensors
-  
-  
- //******************** Screen images background *******************
+
+
+  //******************** Screen images background *******************
   //*****************************************************************
-  
+
   screen1  =  loadImage("/logoImages/"+subFolfder+"/_01_bg_01.png");
   screen1.resize(width/7, height);
-  
+
   screen2  =  loadImage("/logoImages/"+subFolfder+"/_01_bg_02.png");
   screen2.resize((3*width)/5, height/7);
-  
+
   screen3  =  loadImage("/logoImages/"+subFolfder+"/_01_bg_03.png");
-  screen3.resize((302*width)/1000,(602*height)/2100);
-  
+  screen3.resize((302*width)/1000, (602*height)/2100);
+
   screen4  =  loadImage("/logoImages/"+subFolfder+"/_01_bg_03.png");
-  screen4.resize((302*width)/1000,(602*height)/2100);
-  
+  screen4.resize((302*width)/1000, (602*height)/2100);
+
   screen5  =  loadImage("/logoImages/"+subFolfder+"/_01_bg_03.png");
   screen5.resize(3*width/10, 100*height/341);
-  
+
   screen6  =  loadImage("/logoImages/"+subFolfder+"/_01_bg_04.png");
-  screen6.resize((302*width)/1000,(602*height)/2100);
-  
+  screen6.resize((302*width)/1000, (602*height)/2100);
+
   screen7  =  loadImage("/logoImages/"+subFolfder+"/_01_bg_04.png");
-  screen7.resize((302*width)/1000,(602*height)/2100);
-  
+  screen7.resize((302*width)/1000, (602*height)/2100);
+
   screen8  =  loadImage("/logoImages/"+subFolfder+"/_01_bg_04.png");
-  screen8.resize((302*width)/1000,(602*height)/2100);
- 
+  screen8.resize((302*width)/1000, (602*height)/2100);
+
   screen9  =  loadImage("/logoImages/"+subFolfder+"/_01_bg_07.png");
-  screen9.resize(9*width/35, height);   
-  
+  screen9.resize(9*width/35, height);
+
   fillBlack = loadImage("/logoImages/black.jpg");
   fillWhite = loadImage("/logoImages/white.jpg");
   fillBW = loadImage("/logoImages/black_white.jpg");
-  
-  
-  logo = loadImage("/logoImages/neis_detal.png");
-  
 
-  
-  
+
+  logo = loadImage("/logoImages/neis_detal.png");
+
+
+
+
   //******************* define font ********************
   //****************************************************
   // if you want to find  installed in processing
-  //String[] fontList = PFont.list();  
+  //String[] fontList = PFont.list();
   //printArray(fontList);
-  
+
   // define fonts
   f1 = createFont("Cambria", width/33.33, true);
   f2 = createFont("Cambria", width/66.66, true);
   f3 = createFont("Cambria Bold", width/66.66, true);
-  
+
   f1t = createFont("Times New Roman", width/33.33, true);
   f2t = createFont("Times New Roman", width/66.66, true);
   f3t = createFont("Times New Roman Bold", width/66.66, true);
-  
+
   f1g = createFont("Georgia", width/33.33, true);
   f2g = createFont("Georgia", width/66.66, true);
 
@@ -365,194 +364,113 @@ void setup() {
 
 
 void draw() {
-  
+
   background(51);
 
-   angleRotSim++;
-   if(angleRotSim >= 360){angleRotSim =0;}
-   
+  angleRotSim++;
+  if (angleRotSim >= 360) {
+    angleRotSim =0;
+  }
+
   //********** Defining differents screens *************
   //****************************************************
-  
+
   screen1();
   screen2(pg2);
   screen3(pg3);
-  //screen4(pg4);
-  //screen5(pg5);
-  //screen6(pg6);
-  //screen7(pg7);
-  //screen8(pg8);
+  screen4(pg4);
+  screen5(pg5);
+  screen6(pg6);
+  screen7(pg7);
+  screen8(pg8);
   screen9(pg9);
-  
-  
-  
-  
-//************************DATA PACK , UPDATE AND PRINT *************************************
-//******************************************************************************************
-
-  flaotData = treatData(tempData,data);
-  
-  if ((flaotData[0] == 1) && (flaotData[0] == 1)){w1.packData(flaotData);}
-  else if ((flaotData[0] == 1) && (flaotData[0] == 2)){w2.packData(flaotData);}
-  else if ((flaotData[0] == 2) && (flaotData[0] == 1)){w3.packData(flaotData);}
-  else if ((flaotData[0] == 2) && (flaotData[0] == 2)){w4.packData(flaotData);}
-  else if ((flaotData[0] == 3) && (flaotData[0] == 1)){w5.packData(flaotData);}
-  else if ((flaotData[0] == 3) && (flaotData[0] == 2)){w5.packData(flaotData);}
- 
-  //printData();
-  
-  
-//// *************** Value  calca *************************** 
-//meanRoll1   = meanAngle(roll1);
-//meanPitch1  = meanAngle(pitch1);
-//meanYaw1    = meanAngle(yaw1);
-
-//droll1         = dAngleArray(roll1);
-//dpitch1        = dAngleArray(pitch1); 
-//dyaw1          = dAngleArray(yaw1);
-
-//dphi1           =  dAngleArrayMean(droll1);
-//dtheta1         =  dAngleArrayMean(dpitch1);
-//dpsi1           =  dAngleArrayMean(dyaw1)-0.013882357;
-
-//meanRoll2   = meanAngle(roll2);
-//meanPitch2  = meanAngle(pitch2);
-//meanYaw2    = meanAngle(yaw2);
-
-
-//droll2         = dAngleArray(roll2);
-//dpitch2        = dAngleArray(pitch2); 
-//dyaw2          = dAngleArray(yaw2);
-
-//dphi2           =  dAngleArrayMean(roll2 );
-//dtheta2         =  dAngleArrayMean(dpitch2);
-//dpsi2           =  dAngleArrayMean(dyaw2)-0.013176469;
-
-
-//meanW2
-
-
-  
-  
-//************************ 3D Rotation Simulation decision *********************************
-//******************************************************************************************  
-  
 
 
 
 
-//w1_old2  = w1_old1  ;
-//w1_old1  = w1_old0;
-//w1_old0  =  w1 ;
-//if( (w1_old2 != 0) && (w1_old1 != 0) && (w1_old0!= 0) ){ turnStab1 = true;} else{turnStab1 = false;}
+  //************************DATA PACK , UPDATE AND PRINT *************************************
+  //******************************************************************************************
 
-//w2_old2  =  w2_old1;  
-//w2_old1  =  w2_old0;
-//w2_old0  =  w2;
-//if( (w2_old2 != 0) && (w2_old1 != 0) && (w2_old0!= 0) ){ turnStab2 = true;} else{turnStab2 = false;}
+  flaotData = treatData(tempData, data);
 
 
-//if (abs(dpsi1*freq1)<5){
-//    w1  = 0.0;
-//    speed3DSim1  =stepSpeedvalue[0]; 
-//    Isrunning1 = false;
-//  }
-//  else{
-//    w1  = dpsi1*freq1;        // value  to print on the  screen for  the  angular  rate
-//    speed3DSim1 = angleRotSim;
-//    Isrunning1 = true;
-//  }
-    
-//if (abs(dpsi2*freq2)<5){
-//    w2  = 0.0; 
-//    speed3DSim2  =stepSpeedvalue[0];
-//    Isrunning2 = false;
-//  }
-//else{
-//    w2  = dpsi2*freq2;
-//    speed3DSim2 = angleRotSim;
-//    Isrunning2 = true;
-//  }
+  if ((flaotData[0] == 1) && (flaotData[1] == 1)) {
+    w1.packData(flaotData);
+    //w1.printData();
+  } else if ((flaotData[0] == 1) && (flaotData[1] == 2)) {
+    w2.packData(flaotData);
+    //w2.printData();
+  } else if ((flaotData[0] == 2) && (flaotData[1] == 1)) {
+    w3.packData(flaotData);
+    //w3.printData();
+  } else if ((flaotData[0] == 2) && (flaotData[1] == 2)) {
+    w4.packData(flaotData);
+    //w4.printData();
+  } else if ((flaotData[0] == 3) && (flaotData[1] == 1)) {
+    w5.packData(flaotData);
+    //w5.printData();
+  } else if ((flaotData[0] == 3) && (flaotData[1] == 2)) {
+    w6.packData(flaotData);
+    //w6.printData();
+  }
 
-//// rotation rate  adjustment
-
-//if (w1 <5 ){ speedRate1 = stepSpeedvalue[0];}
-//else if((w1 >=5) && (w1 < 10)){speedRate1 = stepSpeedvalue[1];} 
-//else if((w1 >= 10) && (w1 < 180)){speedRate1 = stepSpeedvalue[2];} 
-//else if((w1 >= 180) && (w1 <360)){speedRate1 = stepSpeedvalue[3];} 
-//else {speedRate1 = stepSpeedvalue[4];}
-
-
-//if (w2 <5 ){ speedRate2 = stepSpeedvalue[0];}
-//else if((w2 >=5) && (w2 < 10)){speedRate2 = stepSpeedvalue[1];} 
-//else if((w2 >= 10) && (w2 < 180)){speedRate2 = stepSpeedvalue[2];} 
-//else if((w2 >= 180)&& (w2 <360)){speedRate2 = stepSpeedvalue[3];} 
-//else {speedRate2 = stepSpeedvalue[4];}
-
-
-
-
-
-
-//println();
-//println("dpsi1  : "+ dpsi1 + "   w1   : "+w1);
-//println("dpsi2  : "+dpsi2 + "    w2   : "+w2);
-////println(dyaw1);
-//println();
- 
-
+  //println("flaotData[0]     :   "+flaotData[0]+"               flaotData[1]     :     " +flaotData[1] );
 }
 
 
 // Read data from the Serial Port
 void serialEvent (Serial myPort) {
-  
-   // reads the data from the Serial Port up to the character '.' and puts it into the String variable .
+
+  // reads the data from the Serial Port up to the character '.' and puts it into the String variable .
   byte[] inBuffer = new byte[4];
   inBuffer = myPort.readBytes();
   //myPort.readBytes(inBuffer);
-  
-  //println(hex(inBuffer[0]));
-  
-  
-   if (startRecordData ){
-     tempData[startByteCount] = inBuffer[0];
-     startByteCount++;
-   }
 
-  startByte3 = startByte2;  
-  startByte2 = startByte1;  
+  //println(hex(inBuffer[0]));
+
+
+  if (startRecordData ) {
+    tempData[startByteCount] = inBuffer[0];
+    startByteCount++;
+  }
+
+  startByte3 = startByte2;
+  startByte2 = startByte1;
   startByte1 = startByte0;
   startByte0 = inBuffer[0];
-  
-  if( (startByte3 == 0x2B) && (startByte2 == 0x2B) && (startByte1 == 0x4D) && (startByte0 == 0x23) ){
-    
-     startByte3 = 0x00;     
-     startByte2 = 0x00;     
-     startByte1 = 0x00;     
-     startByte0 = 0x00;
-     
-     if(stopRecordData){startByteCount = 0;}
-   
-     startRecordData = true;
-     stopRecordData = false;
-   }
 
-  stopByte3 = stopByte2;  
-  stopByte2 = stopByte1;  
-  stopByte1 = stopByte0;  
-  stopByte0 = inBuffer[0];
-  
-  if( (stopByte3 ==0x0D) && (stopByte2 == 0x0A) && (stopByte1 == 0x00) && (stopByte0 == 0x00) ){
+  if ( (startByte3 == 0x2B) && (startByte2 == 0x2B) && (startByte1 == 0x4D) && (startByte0 == 0x23) ) {
 
-     stopByte3 = 0x00;     stopByte2 = 0x00;     stopByte1 = 0x00;     stopByte0 = 0x00;
-     
-     stopByteCount =1;
-     
-     startRecordData = false;
-     stopRecordData = true;
+    startByte3 = 0x00;
+    startByte2 = 0x00;
+    startByte1 = 0x00;
+    startByte0 = 0x00;
+
+    if (stopRecordData) {
+      startByteCount = 0;
+    }
+
+    startRecordData = true;
+    stopRecordData = false;
   }
-  
+
+  stopByte3 = stopByte2;
+  stopByte2 = stopByte1;
+  stopByte1 = stopByte0;
+  stopByte0 = inBuffer[0];
+
+  if ( (stopByte3 ==0x0D) && (stopByte2 == 0x0A) && (stopByte1 == 0x00) && (stopByte0 == 0x00) ) {
+
+    stopByte3 = 0x00;
+    stopByte2 = 0x00;
+    stopByte1 = 0x00;
+    stopByte0 = 0x00;
+
+    stopByteCount =1;
+
+    startRecordData = false;
+    stopRecordData = true;
+  }
 }
 
 
@@ -560,130 +478,121 @@ void serialEvent (Serial myPort) {
 
 //************************************* wheels class ***************************************
 //******************************************************************************************
-class WheelVar{
-  
+class WheelVar {
+
   float block;
   float espID;
   float bat;
   float temp;
   float pression;  // in bars /1000
   float x;
-  float w              =1.0;
+  float w              =0.0;
   float freq;
   float[] roll         = new float[17];
-  float[] pitch        = new float[17]; 
+  float[] pitch        = new float[17];
   float[] yaw          = new float[17];
-  
- 
+
+  float [] useful      = new float[4];
+
   float speed3DSim     =0.0;
   int speedRate        =0;
-  Boolean Isrunning     = true;
+  Boolean Isrunning     = false;
   Boolean turnStab      =true;
-  
- void packData( float[] array ){
-    
-  block                 = int(array[0]*1000);
-  espID                 = int(array[1]*1000);
-  bat                   = array[3];
-  temp                  = array[4];
-  pression              = array[5];
-  x                     = array[6];
-  w                     = array[7];
-  freq                  = array[8];  
 
-  int wordStartcout   = 9;
-  
-  for(int i = 0; i<16; i++){
-  
-     roll[i]         =  array[wordStartcout];
-     pitch[i]        =  array[wordStartcout+1];
-     yaw[i]          =  array[wordStartcout+2];
-  
-    wordStartcout+=3;
-    } 
-     speed3DSim     =0.0;
-     speedRate        =0;
-     Isrunning     = true;
-     turnStab      =true;
+  void packData( float[] array ) {
+
+    block                 = int(array[0]);
+    espID                 = int(array[1]);
+    bat                   = array[2];
+    temp                  = array[3];
+    pression              = array[4];
+    x                     = array[5];
+    w                     = array[6];
+    freq                  = array[7];
+
+    int wordStartcout   = 8;
+
+    for (int i = 0; i<17; i++) {
+
+      roll[i]         =  array[wordStartcout];
+      pitch[i]        =  array[wordStartcout+1];
+      yaw[i]          =  array[wordStartcout+2];
+
+      wordStartcout+=3;
+    }
+    for (int j =0; j<4; j++) {
+      useful[0]= bat;
+      useful[1]= w;
+      useful[2]= temp;
+      useful[3]= pression;
+    }
+    speed3DSim     =0.0;
+    speedRate        =0;
+    if (abs(w) !=0) {
+      Isrunning     = true;
+    } else {
+      Isrunning     = false;
+    }
+    turnStab      =true;
   }
 
-void printData(){
-  
-  if (espID ==1){
-    println(block);
-    println(espID);
-    println(bat);
-    println(temp);
-    println(pression);
-    println(x);
-    println(w);
-    println(freq);
-    for(int i = 0; i<18; i++){ print(roll[i] + "  ");}
-    println();
-    for(int i = 0; i<18; i++){ print(pitch[i]+ "  ");}
-    println();
-    for(int i = 0; i<18; i++){ print(yaw[i] + "  ");}
-    println();
-    println();
-  
-  }else if (espID ==1){
-  
-    print("                                        "); println(block);
-    print("                                        "); println(espID);
-    print("                                        "); println(bat);
-    print("                                        "); println(temp);
-    print("                                        "); println(pression);
-    print("                                        "); println(x);
-    print("                                        "); println(w);
-    print("                                        "); println(freq);
-    print("                                        ");
-    for(int i = 0; i<18; i++){ print(roll[i] + "  ");}
-    println();
-    print("                                        ");
-    for(int i = 0; i<18; i++){ print(pitch[i]+ "  ");}
-    println();
-    print("                                        ");
-    for(int i = 0; i<18; i++){ print(yaw[i] + "  ");}
-    println();
-  
-      }
+  void printData() {
 
-    }
-    
-  void tempInd(PGraphics pg){
-  
-     pg.stroke (buttonColor);
-     pg.strokeWeight(width/500);
-    
-     pg.fill (buttonColor);
-      //pg.fill (227,227,227);
-     pg.smooth();
-    
-     //build thermostat
-     pg.rectMode(CORNER);
-     
-     pg.rect (width/19.23, width/3.58, width/66.66, -width/8.06,width/50);
-     pg.ellipse (width/16.66, width/3.7, width/40, width/50);
-    
-     //build quicksilver reservoir
-      if (temp <= 30){ 
-        pg.stroke (100,200,0);
-        pg.fill(100, 200,0);
-      } else if (temp <=60){
-        pg.stroke (0,255,0);
-        pg.fill(0, 255,0);
-      } else
-      {
-          pg.stroke (255,0,0);
-          pg.fill(255, 0, 0);
+    if (espID ==1) {
+      println(block);
+      println(espID);
+      println(bat);
+      println(temp);
+      println(pression);
+      println(x);
+      println(w);
+      println(freq);
+      for (int i = 0; i<17; i++) {
+        print(roll[i] + "  ");
       }
-     pg.ellipse (width/16.66, width/3.7, width/100, width/100);
-    
-     //quicksilver
-     if (temp <=  0){
-           pg.rect(width/16.94, width/3.73, width/500, 0,width/50);
-     }else {
-            pg.rect(width/16.94, width/3.73, width/500, -temp,width/50);
-     }
+      println();
+      for (int i = 0; i<17; i++) {
+        print(pitch[i]+ "  ");
+      }
+      println();
+      for (int i = 0; i<17; i++) {
+        print(yaw[i] + "  ");
+      }
+      println();
+      println();
+    } else if (espID ==1) {
+
+      print("                                        ");
+      println(block);
+      print("                                        ");
+      println(espID);
+      print("                                        ");
+      println(bat);
+      print("                                        ");
+      println(temp);
+      print("                                        ");
+      println(pression);
+      print("                                        ");
+      println(x);
+      print("                                        ");
+      println(w);
+      print("                                        ");
+      println(freq);
+      print("                                        ");
+      for (int i = 0; i<17; i++) {
+        print(roll[i] + "  ");
+      }
+      println();
+      print("                                        ");
+      for (int i = 0; i<17; i++) {
+        print(pitch[i]+ "  ");
+      }
+      println();
+      print("                                        ");
+      for (int i = 0; i<17; i++) {
+        print(yaw[i] + "  ");
+      }
+      println();
+    }
   }
 }
